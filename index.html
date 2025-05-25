@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transforme suas Planilhas em Sistemas Completos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        // Copy to clipboard function
+        function copyToClipboard() {
+            try {
+                const htmlContent = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transforme suas Planilhas em Sistemas Completos - Rogerinho Ramos</title>
+    ${document.head.innerHTML}
+</head>
+<body>
+    ${document.body.innerHTML}
+</body>
+</html>`;
+
+                navigator.clipboard.writeText(htmlContent).then(() => {
+                    alert('✅ Código copiado para área de transferência!\n\nAgora você pode:\n1. Colar em um arquivo .html\n2. Salvar no computador\n3. Hospedar em Netlify.com ou GitHub');
+                }).catch(() => {
+                    // Fallback method
+                    const textArea = document.createElement('textarea');
+                    textArea.value = htmlContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('✅ Código copiado!\n\nCole em um arquivo .html e salve.');
+                });
+            } catch (error) {
+                console.error('Erro ao copiar:', error);
+                alert('❌ Erro ao copiar. Use o botão de download.');
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            position: relative;
+            padding: 2rem;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Slide 1 - Intro */
+        .intro-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .intro-slide h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .intro-slide .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .intro-slide .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Slide 2 - Problema */
+        .problem-slide {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+        }
+
+        .problem-slide h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .problems-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+        }
+
+        .problem-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Slide 3 - Solução */
+        .solution-slide {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+        }
+
+        .solution-slide h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+        }
+
+        .solution-item {
+            background: rgba(255,255,255,0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .solution-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .solution-item .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Slides de Portfolio */
+        .portfolio-slide {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 1rem;
+        }
+
+        .portfolio-slide h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-image {
+            max-width: 90%;
+            max-height: 70vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            object-fit: contain;
+        }
+
+        .portfolio-description {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Slide Final */
+        .cta-slide {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .cta-slide h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-content {
+            background: rgba(255,255,255,0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            max-width: 800px;
+        }
+
+        .cta-button {
+            background: #fff;
+            color: #f5576c;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            min-width: 200px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #667eea);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .intro-slide h1 {
+                font-size: 2.5rem;
+            }
+            
+            .intro-slide .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .portfolio-slide h2,
+            .solution-slide h2,
+            .problem-slide h2,
+            .cta-slide h2 {
+                font-size: 2rem;
+            }
+            
+            .slide {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="slide-counter" id="slideCounter">1 / 11</div>
+
+        <!-- Slide 1: Introdução -->
+        <div class="slide intro-slide active">
+            <h1>🚀 Transforme suas Planilhas em Sistemas Completos</h1>
+            <p class="subtitle">De dados estáticos para soluções dinâmicas e inteligentes</p>
+            <div class="highlight">
+                <h3>✨ Dashboards Interativos | 🔗 Integração com APIs | 📱 Apps Mobile-Friendly</h3>
+                <p>Desenvolvido por <strong>Rogerinho Ramos</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 2: O Problema -->
+        <div class="slide problem-slide">
+            <h2>😤 O Problema das Planilhas Tradicionais</h2>
+            <div class="problems-list">
+                <div class="problem-item">
+                    <h3>📊 Dados Estáticos</h3>
+                    <p>Informações desatualizadas e sem interatividade</p>
+                </div>
+                <div class="problem-item">
+                    <h3>🤝 Falta de Colaboração</h3>
+                    <p>Dificuldade para trabalho em equipe</p>
+                </div>
+                <div class="problem-item">
+                    <h3>📱 Sem Mobilidade</h3>
+                    <p>Não funciona bem em dispositivos móveis</p>
+                </div>
+                <div class="problem-item">
+                    <h3>🔗 Sem Integração</h3>
+                    <p>Não se conecta com outros sistemas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: A Solução -->
+        <div class="slide solution-slide">
+            <h2>✅ A Solução: Sistemas Inteligentes</h2>
+            <div class="solutions-grid">
+                <div class="solution-item">
+                    <div class="icon">📈</div>
+                    <h3>Dashboards Dinâmicos</h3>
+                    <p>Visualizações em tempo real e interativas</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🔔</div>
+                    <h3>Notificações Automáticas</h3>
+                    <p>Email e Telegram integrados</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">📱</div>
+                    <h3>Responsivo</h3>
+                    <p>Funciona em qualquer dispositivo</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🔒</div>
+                    <h3>Controle de Acesso</h3>
+                    <p>Usuários e permissões personalizadas</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">📊</div>
+                    <h3>Relatórios Avançados</h3>
+                    <p>Análises detalhadas e automáticas</p>
+                </div>
+                <div class="solution-item">
+                    <div class="icon">🔗</div>
+                    <h3>Integrações</h3>
+                    <p>APIs, bancos de dados e sistemas externos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Calendário de Férias -->
+        <div class="slide portfolio-slide">
+            <h2>📅 Sistema de Gestão de Férias</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="color: #333; text-align: center;">
+                        <h3 style="color: #4285f4; margin-bottom: 1rem;">📅 Calendário de Férias Interativo</h3>
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 600px; margin: 0 auto;">
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Dom</div>
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Seg</div>
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Ter</div>
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Qua</div>
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Qui</div>
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Sex</div>
+                            <div style="background: #4285f4; color: white; padding: 8px; text-align: center; border-radius: 5px;">Sáb</div>
+                            <div style="padding: 8px; text-align: center;">1</div>
+                            <div style="background: #e8f0fe; padding: 8px; text-align: center; border-radius: 5px; font-size: 0.8em;">2<br>João</div>
+                            <div style="background: #e8f0fe; padding: 8px; text-align: center; border-radius: 5px; font-size: 0.8em;">3<br>Maria</div>
+                            <div style="padding: 8px; text-align: center;">4</div>
+                            <div style="padding: 8px; text-align: center;">5</div>
+                            <div style="padding: 8px; text-align: center;">6</div>
+                            <div style="padding: 8px; text-align: center;">7</div>
+                        </div>
+                        <p style="margin-top: 1rem; color: #666;">✅ Turno A | ✅ Turno B | 📊 Programadas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> De planilha manual para sistema automatizado</p>
+                <p><strong>✨ Recursos:</strong> Calendário interativo, previsão de períodos, gestão de turnos</p>
+                <p><strong>📊 Resultado:</strong> Redução de 80% no tempo de planejamento</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Dashboard de Avaliação -->
+        <div class="slide portfolio-slide">
+            <h2>📊 Dashboard de Performance</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="color: #333; text-align: center;">
+                        <h3 style="color: #6c5ce7; margin-bottom: 1rem;">📈 Dashboard Análise de Performance</h3>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid #6c5ce7;">
+                                <h4 style="color: #6c5ce7;">81.5%</h4>
+                                <p style="font-size: 0.9em; color: #666;">Média Geral</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid #00b894;">
+                                <h4 style="color: #00b894;">Horário</h4>
+                                <p style="font-size: 0.9em; color: #666;">Melhor Área</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid #fdcb6e;">
+                                <h4 style="color: #fdcb6e;">Crescimento</h4>
+                                <p style="font-size: 0.9em; color: #666;">Área para Melhoria</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid #e17055;">
+                                <h4 style="color: #e17055;">26</h4>
+                                <p style="font-size: 0.9em; color: #666;">Total Avaliações</p>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
+                            <p style="color: #666; font-size: 0.9em;">📊 Comparativo entre Setores - Gráficos Interativos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> Gráficos estáticos em dashboard interativo</p>
+                <p><strong>✨ Recursos:</strong> Análise radar, comparativos setoriais, métricas em tempo real</p>
+                <p><strong>📈 Resultado:</strong> Visibilidade 360° da performance organizacional</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Avaliação 360° -->
+        <div class="slide portfolio-slide">
+            <h2>🎯 Sistema de Avaliação 360°</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="color: #333; text-align: center;">
+                        <h3 style="color: #6c5ce7; margin-bottom: 1rem;">🎯 Dashboard de Avaliação 360° de Liderança</h3>
+                        <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <h4 style="color: #6c5ce7; margin-bottom: 1rem;">Pontuação: 4.4</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                <div style="text-align: left;">
+                                    <p><strong>💬 Comunicação:</strong> Categoria Mais Forte</p>
+                                    <p><strong>⚙️ Gerencial:</strong> Categoria para Desenvolvimento</p>
+                                </div>
+                                <div style="text-align: left;">
+                                    <p><strong>👥 33 Respondentes</strong></p>
+                                    <p><strong>📊 Gráfico Radar Interativo</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: #e8f0fe; padding: 1rem; border-radius: 10px;">
+                            <p style="color: #666;">✅ Identificar áreas de melhoria | 💡 Compreender percepções | 🚀 Desenvolver plano de crescimento</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> Formulários em papel para plataforma digital</p>
+                <p><strong>✨ Recursos:</strong> Interface intuitiva, relatórios automáticos, recomendações de desenvolvimento</p>
+                <p><strong>🚀 Resultado:</strong> Processo 10x mais rápido e eficiente</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Relatório Individual -->
+        <div class="slide portfolio-slide">
+            <h2>👤 Relatórios Personalizados</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="color: #333; text-align: center;">
+                        <h3 style="color: #6c5ce7; margin-bottom: 1rem;">👤 Relatório Individual - teste4</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                            <div style="text-align: left;">
+                                <p><strong>Cargo:</strong> Prepar./Oper. Centro Usinagem</p>
+                                <p><strong>Setor:</strong> Balanc./Furad./Serra</p>
+                                <p><strong>Data:</strong> 06/04/2025</p>
+                                <br>
+                                <h4 style="color: #6c5ce7;">Pontuação por Área:</h4>
+                                <div style="background: #00b894; height: 8px; border-radius: 4px; margin: 5px 0;"><span style="color: white; font-size: 0.8em;">Produtividade: 100%</span></div>
+                                <div style="background: #fdcb6e; height: 8px; border-radius: 4px; margin: 5px 0;"><span style="color: white; font-size: 0.8em;">Crescimento: 50%</span></div>
+                                <div style="background: #00cec9; height: 8px; border-radius: 4px; margin: 5px 0;"><span style="color: white; font-size: 0.8em;">Limpeza: 75%</span></div>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
+                                <h4 style="color: #6c5ce7;">🎯 Recomendações</h4>
+                                <p style="text-align: left; font-size: 0.9em; margin-top: 1rem;">
+                                    <strong>Autogestão:</strong> Oferecer mais orientação e estrutura<br>
+                                    <strong>Time:</strong> Promover atividades de integração<br>
+                                    <strong>Crescimento:</strong> Oportunidades de aprendizado
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> Relatórios manuais em análises automáticas</p>
+                <p><strong>✨ Recursos:</strong> Gráficos personalizados, recomendações específicas, exportação automática</p>
+                <p><strong>⚡ Resultado:</strong> Relatórios instantâneos e precisos</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Sistema de Pedidos -->
+        <div class="slide portfolio-slide">
+            <h2>🍽️ Sistema de Pedidos de Refeição</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: #2c3e50; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;">
+                    <h3 style="color: #f39c12; margin-bottom: 1rem;">🍽️ Refeição Hora Extra - Telegram Bot</h3>
+                    <div style="background: #34495e; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                        <p><strong>✅ PEDIDO CONFIRMADO</strong></p>
+                        <p>📅 AGENDADO PARA 07/05/2025</p>
+                        <p>⏰ Horário: 18:30 | 👥 Quantidade: 1</p>
+                        <p>🏢 Setor: Logística | 🍽️ Refeição: Jantar</p>
+                        <p style="color: #2ecc71;">✅ Status: Confirmado</p>
+                    </div>
+                    <div style="background: #e74c3c; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                        <p><strong>❌ PEDIDO CANCELADO</strong></p>
+                        <p>📅 Cancelado para 07/05/2025</p>
+                        <p>🏢 Setor: Manutenção</p>
+                    </div>
+                    <div style="background: #3498db; padding: 1rem; border-radius: 10px;">
+                        <p><strong>📱 Interface Mobile Integrada</strong></p>
+                        <p>🤖 Notificações automáticas via Telegram</p>
+                        <p>⚡ Confirmação instantânea</p>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> Pedidos manuais para sistema automatizado</p>
+                <p><strong>✨ Recursos:</strong> Interface mobile, notificações Telegram, gestão de status</p>
+                <p><strong>📱 Resultado:</strong> 100% digital e integrado</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Gestão de Dispositivos -->
+        <div class="slide portfolio-slide">
+            <h2>💻 Sistema de Gestão de Equipamentos</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <div style="color: #333;">
+                        <h3 style="color: #6c5ce7; margin-bottom: 1rem; text-align: center;">💻 Sistema Gestor - Dispositivos de Usinagem</h3>
+                        <div style="background: #d4edda; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
+                            <p style="color: #155724;"><strong>✅ 3 dispositivos encontrados</strong></p>
+                            <p style="color: #666; font-size: 0.9em;">Última atualização: 18:46:42</p>
+                        </div>
+                        <div style="background: #f8f9fa; border-radius: 10px; overflow: hidden;">
+                            <div style="background: #6c5ce7; color: white; padding: 0.8rem; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 1rem; font-size: 0.9em;">
+                                <div><strong>Código</strong></div>
+                                <div><strong>Nome</strong></div>
+                                <div><strong>Tipo</strong></div>
+                                <div><strong>Localização</strong></div>
+                                <div><strong>Status</strong></div>
+                            </div>
+                            <div style="padding: 0.8rem; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 1rem; font-size: 0.8em; border-bottom: 1px solid #dee2e6;">
+                                <div>D001</div>
+                                <div>Teste primeiro dispositivo</div>
+                                <div>Fixação</div>
+                                <div>Armário 1 - A2</div>
+                                <div style="color: #dc3545;">🔧 Em manutenção</div>
+                            </div>
+                            <div style="padding: 0.8rem; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 1rem; font-size: 0.8em; border-bottom: 1px solid #dee2e6;">
+                                <div>D002</div>
+                                <div>Suporte C</div>
+                                <div>Fixação</div>
+                                <div>Armário 2 - G5</div>
+                                <div style="color: #fd7e14;">⚠️ Em uso</div>
+                            </div>
+                            <div style="padding: 0.8rem; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 1rem; font-size: 0.8em;">
+                                <div>D003</div>
+                                <div>Base Hidráulica</div>
+                                <div>Fixação</div>
+                                <div>Armário 2 - J3</div>
+                                <div style="color: #28a745;">✅ Disponível</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> Controle manual para sistema digital completo</p>
+                <p><strong>✨ Recursos:</strong> Rastreamento, manutenção preventiva, histórico completo</p>
+                <p><strong>🔧 Resultado:</strong> Controle total do patrimônio</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Supply Optimizer -->
+        <div class="slide portfolio-slide">
+            <h2>📦 Supply Optimizer</h2>
+            <div class="image-container">
+                <div class="demo-image" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;">
+                    <h3 style="color: #3498db; margin-bottom: 1rem; text-align: center;">📦 Supply Optimizer - IA Integrada</h3>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <h4>🔍 Pesquisa de Itens</h4>
+                            <p style="font-size: 0.9em; opacity: 0.8;">Busca inteligente por código, local ou descrição</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <h4>⭐ Itens Recentes</h4>
+                            <p style="font-size: 0.9em; opacity: 0.8;">Histórico de acessos frequentes</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <h4>📊 Análise de Consumo</h4>
+                            <p style="font-size: 0.9em; opacity: 0.8;">Top 10 itens por setor</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <h4>🔄 Análise Cruzada</h4>
+                            <p style="font-size: 0.9em; opacity: 0.8;">Correlações entre setores</p>
+                        </div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 10px;">
+                        <h4 style="color: #3498db; margin-bottom: 1rem;">🤖 Recursos de IA:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.9em;">
+                            <div>• Previsão de demanda automática</div>
+                            <div>• Otimização de estoque em tempo real</div>
+                            <div>• Análise preditiva de consumo</div>
+                            <div>• Alertas inteligentes de reposição</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-description">
+                <p><strong>🎯 Transformação:</strong> Controle de estoque em planilhas para IA integrada</p>
+                <p><strong>✨ Recursos:</strong> Análise preditiva, otimização automática, dashboards avançados</p>
+                <p><strong>🤖 Resultado:</strong> Gestão inteligente de suprimentos</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Call to Action -->
+        <div class="slide cta-slide">
+            <h2>🚀 Pronto para Transformar seu Negócio?</h2>
+            <div class="cta-content">
+                <h3>💡 Que tal transformarmos suas planilhas em sistemas poderosos?</h3>
+                <br>
+                <p><strong>✅ Dashboards Profissionais</strong></p>
+                <p><strong>✅ Integração com Email e Telegram</strong></p>
+                <p><strong>✅ Apps Responsivos</strong></p>
+                <p><strong>✅ Automação Completa</strong></p>
+                <br>
+                <button class="cta-button" onclick="window.open('mailto:rogerinho.invest02@gmail.com', '_blank')">
+                    📧 rogerinho.invest02@gmail.com
+                </button>
+                <button class="cta-button" onclick="window.open('https://t.me/Rogerinho_Ramos', '_blank')">
+                    📱 @Rogerinho_Ramos
+                </button>
+                <button class="cta-button" onclick="window.open('https://www.linkedin.com/in/rogério-costa-ramos-0aa0aa26', '_blank')">
+                    💼 LinkedIn
+                </button>
+                <button class="cta-button" onclick="window.open('https://www.youtube.com/@rogerinhoramos', '_blank')">
+                    📺 YouTube
+                </button>
+                <br><br>
+                <p><strong>Desenvolvido por Rogerinho Ramos</strong></p>
+                <p>Transformando dados em soluções</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="previousSlide()">⬅️ Anterior</button>
+        <button class="nav-btn" id="autoplayBtn" onclick="toggleAutoPlay()">▶️ Play Auto</button>
+        <button class="nav-btn" onclick="nextSlide()">Próximo ➡️</button>
+    </div>
+
+    <script>
+        // Variables
+        let currentSlide = 0;
+        let autoAdvanceInterval;
+        let isAutoPlaying = false;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Core Functions
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Auto-play Functions
+        function startAutoPlay() {
+            if (!isAutoPlaying) {
+                isAutoPlaying = true;
+                autoAdvanceInterval = setInterval(nextSlide, 6000);
+                document.getElementById('autoplayBtn').textContent = '⏸️ Pausar';
+            }
+        }
+
+        function stopAutoPlay() {
+            if (isAutoPlaying) {
+                isAutoPlaying = false;
+                clearInterval(autoAdvanceInterval);
+                document.getElementById('autoplayBtn').textContent = '▶️ Play Auto';
+            }
+        }
+
+        function toggleAutoPlay() {
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        }
+
+        // Export Function
+        function exportPresentation() {
+            try {
+                // Get the complete HTML content
+                const htmlContent = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transforme suas Planilhas em Sistemas Completos - Rogerinho Ramos</title>
+    ${document.head.innerHTML}
+</head>
+<body>
+    ${document.body.innerHTML}
+</body>
+</html>`;
+
+                // Create blob and download
+                const blob = new Blob([htmlContent], { 
+                    type: 'text/html;charset=utf-8' 
+                });
+                
+                // Create download link
+                const url = URL.createObjectURL(blob);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = url;
+                downloadLink.download = 'apresentacao-portfolio-rogerinho-ramos.html';
+                downloadLink.style.display = 'none';
+                
+                // Trigger download
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // Clean up
+                setTimeout(() => {
+                    URL.revokeObjectURL(url);
+                }, 100);
+                
+                // Show success message
+                alert('✅ Apresentação salva com sucesso!\n\nArquivo: apresentacao-portfolio-rogerinho-ramos.html\n\nVocê pode hospedar este arquivo em:\n• Netlify.com (arrastar e soltar)\n• GitHub Pages\n• Vercel.com');
+                
+            } catch (error) {
+                console.error('Erro ao salvar:', error);
+                alert('❌ Erro ao salvar. Tente:\n\n1. Usar outro navegador (Chrome/Firefox)\n2. Verificar se pop-ups estão bloqueados\n3. Copiar o código manualmente');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            } else if (e.key === 'p' || e.key === 'P') {
+                toggleAutoPlay();
+            } else if (e.key === 'Escape') {
+                stopAutoPlay();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlide(0);
+            setTimeout(startAutoPlay, 3000);
+        });
+    </script>
+</body>
+</html>
